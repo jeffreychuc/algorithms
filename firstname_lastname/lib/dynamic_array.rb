@@ -42,10 +42,29 @@ class DynamicArray
 
   # O(n): has to shift over all the elements.
   def shift
+    self.check_removal
+    tmp_store = StaticArray.new(@capacity)
+    (1..@length).each do |i|
+      tmp_store[i-1] = @store[i]
+    end
+    ret_val = @store[0]
+    @store = tmp_store
+    @length -= 1
+    ret_val
   end
 
   # O(n): has to shift over all the elements.
   def unshift(val)
+    self.resize! if @length == @capacity
+    tmp_store = StaticArray.new(@capacity)
+    tmp_store[0] = val
+    (0...@length).each do |i|
+      tmp_store[i+1] = @store[i]
+    end
+    @store = tmp_store
+    @length += 1
+    # byebug
+    @store
   end
 
   protected
