@@ -52,10 +52,24 @@ class DynamicArray
   attr_accessor :capacity, :store
   attr_writer :length
 
+  def check_removal
+    raise 'index out of bounds' if @length == 0
+  end
+
   def check_index(index)
+    raise "index out of bounds" if (index + 1) > @length
   end
 
   # O(n): has to copy over all the elements to the new store.
   def resize!
+    tmp_store = StaticArray.new(@capacity * 2)
+    # @store.each_with_index do |val, i|
+    #   tmp_store[i] = val
+    # end
+    (0..@capacity).each do |i|
+      tmp_store[i] = @store[i]
+    end
+    @store = tmp_store
+    @capacity = @capacity * 2
   end
 end
