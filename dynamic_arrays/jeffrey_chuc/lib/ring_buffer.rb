@@ -1,5 +1,4 @@
 require_relative "static_array"
-require 'byebug'
 
 class RingBuffer
   attr_reader :length
