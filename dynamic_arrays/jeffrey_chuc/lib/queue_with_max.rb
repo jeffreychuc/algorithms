@@ -7,23 +7,52 @@
 # methods you need.
 
 require_relative 'ring_buffer'
+require 'byebug'
 
 class QueueWithMax
   attr_accessor :store
+  attr_reader :max
 
   def initialize
+    @store = RingBuffer.new
+    @max = RingBuffer.new
   end
 
   def enqueue(val)
+    @store.unshift(val)
+    # byebug
+    if @max.length == 0
+      # init the max queue
+      @max.unshift(val)
+    else
+      tmp_max = RingBuffer.new
+      val_buffer = RingBuffer.new
+      val_buffer.push(val)
+      # byebug
+      (@max.length).times do |i|
+        if ((val_buffer.length > 0 && @max.length > 0) && val_buffer[0] > @max[0])
+          tmp_max.push(val_buffer.shift)
+        end
+        tmp_max.push(@max.shift)
+      end
+      @max = tmp_max
+    end
+    # p @store
+    # p @max
+    @store
   end
 
   def dequeue
+    @max.pop
+    @store.pop
   end
 
   def max
+    # byebug if @max[0] == 17
+    @max[0]
   end
 
   def length
+    @store.length
   end
-
 end
