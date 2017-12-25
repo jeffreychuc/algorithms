@@ -13,6 +13,7 @@ class RingBuffer
   # O(1)
   def [](index)
     self.check_index(index)
+    # byebug if index == 0
     @store[translate_index(index)]
   end
 
@@ -41,8 +42,10 @@ class RingBuffer
   def shift
     self.check_removal
     ret_val = @store[@start_idx]
+    # byebug
     @start_idx += 1
     @start_idx %= @capacity
+    # byebug if @start_idx == 1
     @length -= 1
     ret_val
   end
@@ -52,6 +55,7 @@ class RingBuffer
     self.resize! if @length == @capacity
     @start_idx -= 1
     (@start_idx = (@start_idx + @capacity) % @capacity) if @start_idx < 0
+    # byebug if @start_idx == 1
     @store[@start_idx] = val
     @length += 1
   end
@@ -69,7 +73,7 @@ class RingBuffer
   end
 
   def translate_index(index)
-    ((start_idx + index) % @capacity)
+    ((@start_idx + index) % @capacity)
   end
 
   def resize!
@@ -81,6 +85,8 @@ class RingBuffer
     end
     @store = tmp_store
     @capacity = @capacity * 2
+    # byebug
     @start_idx = @capacity - @start_idx
+    # byebug if @start_idx == 1
   end
 end
