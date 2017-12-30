@@ -15,6 +15,17 @@ class LRUCache
   end
 
   def get(key)
+    # if key exists, move to front of LL and return value
+    # else calc and store into LL, eject last one if LL.length > @max
+    if @map.include?(key)
+      node_to_move = @map[key]
+      @map[key].remove
+      @map[key] = @store.append(node_to_move.key, node_to_move.val)
+    else
+      @map[key] = @store.append(key, @prc.call(key))
+    end
+    eject! if count > @max
+    @map[key].val
   end
 
   def to_s
@@ -32,5 +43,7 @@ class LRUCache
   end
 
   def eject!
+    @map.delete(@store.first.key)
+    @store.remove(@store.first.key)
   end
 end
