@@ -12,5 +12,5 @@ describe '#can_string_be_palindrome?' do
     expect(result_2).to be(false)
     expect(result_3).to be(true)
     expect(result_4).to be(true)
-  end
+end
 end

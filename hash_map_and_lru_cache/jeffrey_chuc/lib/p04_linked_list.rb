@@ -55,6 +55,7 @@ class LinkedList
     self.each do |node|
       return node.val if node.key == key
     end
+    nil
   end
 
   def include?(key)
