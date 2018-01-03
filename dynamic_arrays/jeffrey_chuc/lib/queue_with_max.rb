@@ -48,7 +48,7 @@ class QueueWithMax
   end
 
   def max
-    # byebug if @max[0] == 17
+    return @store[0] if @store.length == 1
     @max[0]
   end
 
