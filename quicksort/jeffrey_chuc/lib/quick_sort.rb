@@ -37,15 +37,6 @@ class QuickSort
         end
       end
     end
-    # array.each_with_index do |el, i|
-    #   next if i < start
-    #   if prc.call(el, array[start]) == -1
-    #     partition += 1
-    #     if partition != i
-    #       array[i], array[partition] = array[partition], array[i]
-    #     end
-    #   end
-    # end
     array[start], array[partition] = array[partition], array[start]
     partition
   end
